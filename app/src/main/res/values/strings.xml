@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">jfood-android</string>
+    <string name="name">name</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="login">LOGIN</string>
+    <string name="register">REGISTER</string>
+    <string name="register_now">Register Now</string>
+    <string name="jfood">Jfood</string>
+</resources>
