@@ -11,10 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
-import android.widget.BaseExpandableListAdapter;
 
 public class MainListAdapter extends BaseExpandableListAdapter {
-
     private Context _context;
     private ArrayList<Seller> _listDataHeader; // header titles
     // child data in format of header title, child title
@@ -98,5 +96,4 @@ public class MainListAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
-
 }

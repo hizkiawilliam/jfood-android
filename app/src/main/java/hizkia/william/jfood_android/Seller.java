@@ -121,7 +121,7 @@ public class Seller {
     public String toString()
     {
         return "Id = " + getId() +
-                "Name = " + getName() +
+                "Name = " + name +
                 "Phone Number = " + getPhoneNumber() +
                 "Location =" + getLocation().getCity();
     }

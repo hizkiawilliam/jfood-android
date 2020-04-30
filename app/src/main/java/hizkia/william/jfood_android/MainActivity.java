@@ -3,6 +3,7 @@ package hizkia.william.jfood_android;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
@@ -30,9 +31,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        expListView = (ExpandableListView) findViewById(R.id.lvExp);
+        expListView = findViewById(R.id.lvExp);
 
         refreshList();
+
+
     }
 
     protected void refreshList() {
@@ -62,7 +65,15 @@ public class MainActivity extends AppCompatActivity {
                                 newLocation
                         );
 
-                        Food newFood = new Food(food.getInt("id"), food.getString("name"), newSeller, food.getInt("price"), food.getString("category"));
+                        Log.e("SELLER", seller.getString("name"));
+
+                        Food newFood = new Food(
+                                food.getInt("id"),
+                                food.getString("name"),
+                                newSeller,
+                                food.getInt("price"),
+                                food.getString("category")
+                        );
 
                         foodIdList.add(newFood);
 
@@ -87,6 +98,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                         childMapping.put(sellerPtr, tempFoodList);
                     }
+
+                    Log.e("SELLER", listSeller.toString());
+
                     listAdapter = new MainListAdapter(MainActivity.this, listSeller, childMapping);
                     expListView.setAdapter(listAdapter);
                 }
