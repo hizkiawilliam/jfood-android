@@ -3,6 +3,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,23 +35,42 @@ public class LoginActivity extends AppCompatActivity {
                 String email = etEmail.getText().toString();
                 String password = etPassword.getText().toString();
 
+                if (email.isEmpty()) {
+                    etEmail.setError("Email field required");
+                    etEmail.requestFocus();
+                    return;
+                }
+                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    etEmail.setError("Please Enter a valid email");
+                    etEmail.requestFocus();
+                    return;
+                }
+
+                if (password.isEmpty()) {
+                    etPassword.setError("Password field required");
+                    etPassword.requestFocus();
+                    return;
+                }
+
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             if(jsonObject != null){
-                                Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
+                                    Toast.makeText(LoginActivity.this, "Welcome "+jsonObject.getString("name"), Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    intent.putExtra("currentUserId", jsonObject.getInt("id"));
+                                    intent.putExtra("currentUserName", jsonObject.getString("name"));
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                    finish();
                             }
                         } catch (JSONException e) {
                             Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                         }
                     }
                 };
-
                 LoginRequest loginRequest = new LoginRequest(email, password, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
                 queue.add(loginRequest);

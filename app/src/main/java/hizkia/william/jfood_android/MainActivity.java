@@ -2,8 +2,10 @@ package hizkia.william.jfood_android;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
@@ -26,16 +28,46 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Seller> listSeller = new ArrayList<>();
     private ArrayList<Food> foodIdList = new ArrayList<>();
     private HashMap<Seller, ArrayList<Food>> childMapping = new HashMap<>();
+    private static int currentUserId;
+    private static String currentUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        expListView = findViewById(R.id.lvExp);
 
+        Bundle extras = getIntent().getExtras();
+        if(extras!=null){
+            currentUserId = extras.getInt("currentUserId");
+            currentUserName = extras.getString("currentUserName");
+        }
+
+        expListView = findViewById(R.id.lvExp);
         refreshList();
 
+        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
 
+                Intent intent = new Intent(MainActivity.this, BuatPesananActivity.class);
+
+                int foodId = childMapping.get(listSeller.get(i)).get(i1).getId();
+                String foodName = childMapping.get(listSeller.get(i)).get(i1).getName();
+                String foodCategory = childMapping.get(listSeller.get(i)).get(i1).getCategory();
+                int foodPrice = childMapping.get(listSeller.get(i)).get(i1).getPrice();
+
+                intent.putExtra("item_id",foodId);
+                intent.putExtra("item_name",foodName);
+                intent.putExtra("item_category",foodCategory);
+                intent.putExtra("item_price",foodPrice);
+
+                intent.putExtra("currentUserId", currentUserId);
+                intent.putExtra("currentUserName", currentUserName);
+
+                startActivity(intent);
+                return true;
+            }
+        });
     }
 
     protected void refreshList() {
