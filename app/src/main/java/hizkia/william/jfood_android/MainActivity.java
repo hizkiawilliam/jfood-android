@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
@@ -13,6 +14,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import android.app.AlertDialog;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -43,7 +46,18 @@ public class MainActivity extends AppCompatActivity {
         }
 
         expListView = findViewById(R.id.lvExp);
+        Button btnPesanan = findViewById(R.id.btnPesanan);
         refreshList();
+
+        btnPesanan.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SelesaiPesananActivity.class);
+                intent.putExtra("currentUserId", currentUserId);
+                intent.putExtra("currentUserName",currentUserName);
+                startActivity(intent);
+            }
+        });
 
         expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
@@ -55,12 +69,10 @@ public class MainActivity extends AppCompatActivity {
                 String foodName = childMapping.get(listSeller.get(i)).get(i1).getName();
                 String foodCategory = childMapping.get(listSeller.get(i)).get(i1).getCategory();
                 int foodPrice = childMapping.get(listSeller.get(i)).get(i1).getPrice();
-
                 intent.putExtra("item_id",foodId);
                 intent.putExtra("item_name",foodName);
                 intent.putExtra("item_category",foodCategory);
                 intent.putExtra("item_price",foodPrice);
-
                 intent.putExtra("currentUserId", currentUserId);
                 intent.putExtra("currentUserName", currentUserName);
 
@@ -68,6 +80,15 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+
+//        btnPesanan.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, SelesaiPesananActivity.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 
     protected void refreshList() {
@@ -77,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     JSONArray jsonResponse = new JSONArray(response);
                     for (int i=0; i<jsonResponse.length(); i++) {
-                        AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.this);
 
                         JSONObject food = jsonResponse.getJSONObject(i);
                         JSONObject seller = food.getJSONObject("seller");

@@ -16,6 +16,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,8 +28,8 @@ public class BuatPesananActivity extends AppCompatActivity {
     private String foodName;
     private String foodCategory;
     private double foodPrice;
-    private int promoCode;
-    private String selectPayment;
+    private String promoCode;
+    private int invoiceId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,22 +87,83 @@ public class BuatPesananActivity extends AppCompatActivity {
         });
 
         btnCount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int selectedRadioId = radioGroup.getCheckedRadioButtonId();
-                RadioButton selectedRadio = findViewById(selectedRadioId);
-                String selected = selectedRadio.getText().toString().trim();
-                switch (selected) {
-                    case "Via CASH":
-                        tvTotalPrice.setText("Rp. " + foodPrice);
-                        break;
-                    case "Via CASHLESS":
-                        tvTotalPrice.setText("Rp. " + (foodPrice - promoCode));
-                        break;
+                @Override
+                public void onClick(View view) {
+                    int selectedRadioId = radioGroup.getCheckedRadioButtonId();
+                    RadioButton selectedRadio = findViewById(selectedRadioId);
+                    String selected = selectedRadio.getText().toString().trim();
+                    switch (selected) {
+                        case "Via CASH":
+                            tvTotalPrice.setText("Rp. " + foodPrice);
+                            btnCount.setVisibility(View.GONE);
+                            btnOrder.setVisibility(View.VISIBLE);
+                            break;
+
+                        case "Via CASHLESS":
+                            //Get Promo Code String
+                            promoCode = etPromoCode.getText().toString();
+                            //Listener Promo
+                            final Response.Listener<String> promoResponse = new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    //Check if promo code is filled or not
+                                    if (promoCode.isEmpty()) {
+                                        Toast.makeText(BuatPesananActivity.this, "No Promo Code Applied", Toast.LENGTH_LONG).show();
+                                        tvTotalPrice.setText("Rp. " + foodPrice);
+                                        //Button VIsibility
+                                        btnCount.setVisibility(View.GONE);
+                                        btnOrder.setVisibility(View.VISIBLE);
+                                    } else {
+                                        try {
+                                            JSONObject jsonResponse = new JSONObject(response);
+                                            //Get Discount Price
+                                            int promoDiscountPrice = jsonResponse.getInt("discount");
+                                            int minimalDiscountPrice = jsonResponse.getInt("minPrice");
+                                            boolean promoStatus = jsonResponse.getBoolean("active");
+                                            //Case if Promo can be Applied
+                                            if (promoStatus == false) {
+                                                Toast.makeText(BuatPesananActivity.this, "Promo Code can no longer used", Toast.LENGTH_LONG).show();
+                                            } else if (promoStatus == true) {
+                                                if (foodPrice < promoDiscountPrice || foodPrice < minimalDiscountPrice) {
+                                                    Toast.makeText(BuatPesananActivity.this, "Promo Code cannot be Applied", Toast.LENGTH_LONG).show();
+                                                } else {
+                                                    //Toast Feedback
+                                                    Toast.makeText(BuatPesananActivity.this, "Promo Code Applied", Toast.LENGTH_LONG).show();
+                                                    //Set Total Price
+                                                    tvTotalPrice.setText("Rp. " + (foodPrice - promoDiscountPrice));
+                                                    //Button VIsibility
+                                                    btnCount.setVisibility(View.GONE);
+                                                    btnOrder.setVisibility(View.VISIBLE);
+                                                }
+                                            }
+                                        } catch (JSONException e) {
+                                            Toast.makeText(BuatPesananActivity.this, "Promo Code not found", Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                }
+                            };
+                            //Volley Request for Promo Request
+                            PromoRequest promoRequest = new PromoRequest(promoCode, promoResponse);
+                            RequestQueue queue = Volley.newRequestQueue(BuatPesananActivity.this);
+                            queue.add(promoRequest);
+                            break;
+                    }
                 }
-                btnCount.setVisibility(View.GONE);
-                btnOrder.setVisibility(View.VISIBLE);
-            }
+//                int selectedRadioId = radioGroup.getCheckedRadioButtonId();
+//                RadioButton selectedRadio = findViewById(selectedRadioId);
+//                String selected = selectedRadio.getText().toString().trim();
+//                promoCode = etPromoCode.getText().toString();
+//                switch (selected) {
+//                    case "Via CASH":
+//                        tvTotalPrice.setText("Rp. " + foodPrice);
+//                        break;
+//                    case "Via CASHLESS":
+//                        fetchPromo(promoCode);
+//                        tvTotalPrice.setText("Rp. " + (foodPrice + promoPrice));
+//                        break;
+//                }
+//                btnCount.setVisibility(View.GONE);
+//                btnOrder.setVisibility(View.VISIBLE);
         });
 
         btnOrder.setOnClickListener(new View.OnClickListener() {
@@ -138,10 +200,11 @@ public class BuatPesananActivity extends AppCompatActivity {
                         }
                     }
                 };
+
                 if(selected.equals("Via CASH")){
                     request = new BuatPesananRequest(foodId+"", currentUserId+"" ,responseListener);
                 }else if(selected.equals("Via CASHLESS")){
-                    request = new BuatPesananRequest(foodId+"", currentUserId+"" ,responseListener);}
+                    request = new BuatPesananRequest(foodId+"", currentUserId+"", promoCode ,responseListener);}
 
                 RequestQueue queue = Volley.newRequestQueue(BuatPesananActivity.this);
                 queue.add(request);

@@ -5,9 +5,15 @@ android:layout_height="fill_parent"
 android:orientation="vertical"
 android:background="#f4f4f4" >
 
-<ExpandableListView
-    android:id="@+id/lvExp"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"/>
+    <ExpandableListView
+        android:id="@+id/lvExp"
+        android:layout_width="match_parent"
+        android:layout_height="495dp" />
+
+    <Button
+        android:id="@+id/btnPesanan"
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:text="@string/pesanan" />
 
 </LinearLayout>

@@ -19,4 +19,14 @@
     <string name="order">Order</string>
     <string name="count">Count</string>
     <string name="ardiuno">Ardiuno</string>
+    <string name="pesanan">Pesanan</string>
+    <string name="ongoing_invoice">Ongoing Invoice</string>
+    <string name="invoice_id">Invoice Id</string>
+    <string name="invoice_total_price">Total Price</string>
+    <string name="invoice_customer_name">Customer Name</string>
+    <string name="invoice_foods">Foods Ordered</string>
+    <string name="invoice_date">Invoice Created</string>
+    <string name="invoice_payment_type">Payment Type</string>
+    <string name="finish_order">Finish Order</string>
+    <string name="cancel_order">Cancel Order</string>
 </resources>
