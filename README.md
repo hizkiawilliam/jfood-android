@@ -11,9 +11,10 @@ Tools used in the project:
 - IntelliJ
 
 Version Changelogs:
-  - v1.0  : - Database for Customer is synced with Postgres. Other objects is yet to be sycned
-            - Fixed cart system for ordering foods
-            - Fixed Promo Code searches
-            - Multiple foods in cart can be ordered
-            - Various error handling for Customer Register
-            - Total Price has been adjusted not by individual foods
+  - v1.0  : 
+    - Database for Customer is synced with Postgres. Other objects is yet to be sycned
+    - Fixed cart system for ordering foods
+    - Fixed Promo Code searches
+    - Multiple foods in cart can be ordered
+    - Various error handling for Customer Register
+    - Total Price has been adjusted not by individual foods
