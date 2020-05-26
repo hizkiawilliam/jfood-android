@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,6 +38,30 @@ public class RegisterActivity extends AppCompatActivity {
                 String name = etName.getText().toString();
                 String email = etEmail.getText().toString();
                 String password = etPassword.getText().toString();
+
+                if (email.isEmpty()) {
+                    etName.setError("Please enter your name");
+                    etName.requestFocus();
+                    return;
+                }
+
+                if (email.isEmpty()) {
+                    etEmail.setError("Please enter your email");
+                    etEmail.requestFocus();
+                    return;
+                }
+
+                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    etEmail.setError("Please enter a valid email");
+                    etEmail.requestFocus();
+                    return;
+                }
+
+                if (password.isEmpty()) {
+                    etPassword.setError("Password field required");
+                    etPassword.requestFocus();
+                    return;
+                }
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override

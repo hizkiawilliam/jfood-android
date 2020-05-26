@@ -13,18 +13,36 @@ public class BuatPesananRequest extends StringRequest {
     private static String URLCashless = "http://192.168.1.105:8080/invoice/createCashlessInvoice";
     private Map<String, String> params;
 
-    public BuatPesananRequest(String foodList, String customerId ,Response.Listener<String> listener) {
+    public BuatPesananRequest(ArrayList<Integer> foodList, String customerId ,Response.Listener<String> listener) {
         super(Method.POST, URLCash, listener, null);
+        String foodListString = "";
+        for(int i = 0; i < foodList.size(); i++){
+            if (i == foodList.size()-1){
+                foodListString += ""+foodList.get(i)+"";
+            }
+            else {
+                foodListString += ""+foodList.get(i)+",";
+            }
+        }
         params = new HashMap<>();
-        params.put("foodList", foodList);
+        params.put("foodList", foodListString);
         params.put("customerId", customerId);
         params.put("deliveryFee", "0");
     }
 
-    public BuatPesananRequest(String foodList, String customerId, String promoCode ,Response.Listener<String> listener) {
+    public BuatPesananRequest(ArrayList<Integer> foodList, String customerId, String promoCode ,Response.Listener<String> listener) {
         super(Method.POST, URLCashless, listener, null);
+        String foodListString = "";
+        for(int i = 0; i < foodList.size(); i++){
+            if (i == foodList.size()-1){
+                foodListString += ""+foodList.get(i)+"";
+            }
+            else {
+                foodListString += ""+foodList.get(i)+",";
+            }
+        }
         params = new HashMap<>();
-        params.put("foodList", foodList);
+        params.put("foodList", foodListString);
         params.put("customerId", customerId);
         params.put("promoCode", promoCode);
     }

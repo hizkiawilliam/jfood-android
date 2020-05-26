@@ -2,10 +2,12 @@ package hizkia.william.jfood_android;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -13,8 +15,12 @@ import android.widget.ExpandableListView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import android.app.AlertDialog;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,8 +33,10 @@ public class MainActivity extends AppCompatActivity {
 
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
+    FloatingActionButton btnfoodCart;
     private ArrayList<Seller> listSeller = new ArrayList<>();
     private ArrayList<Food> foodIdList = new ArrayList<>();
+    private ArrayList<Food> foodCart = new ArrayList<>();
     private HashMap<Seller, ArrayList<Food>> childMapping = new HashMap<>();
     private static int currentUserId;
     private static String currentUserName;
@@ -46,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         expListView = findViewById(R.id.lvExp);
+        btnfoodCart = findViewById(R.id.foodCart);
         Button btnPesanan = findViewById(R.id.btnPesanan);
         refreshList();
 
@@ -63,21 +72,66 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
 
-                Intent intent = new Intent(MainActivity.this, BuatPesananActivity.class);
-
-                int foodId = childMapping.get(listSeller.get(i)).get(i1).getId();
-                String foodName = childMapping.get(listSeller.get(i)).get(i1).getName();
-                String foodCategory = childMapping.get(listSeller.get(i)).get(i1).getCategory();
-                int foodPrice = childMapping.get(listSeller.get(i)).get(i1).getPrice();
-                intent.putExtra("item_id",foodId);
-                intent.putExtra("item_name",foodName);
-                intent.putExtra("item_category",foodCategory);
-                intent.putExtra("item_price",foodPrice);
-                intent.putExtra("currentUserId", currentUserId);
-                intent.putExtra("currentUserName", currentUserName);
-
-                startActivity(intent);
+//                int foodId = childMapping.get(listSeller.get(i)).get(i1).getId();
+                Food food = childMapping.get(listSeller.get(i)).get(i1);
+//                String foodCategory = childMapping.get(listSeller.get(i)).get(i1).getCategory();
+//                int foodPrice = childMapping.get(listSeller.get(i)).get(i1).getPrice();
+                foodCart.add(food);
+                Toast.makeText(MainActivity.this, "1 x "+food.getName()+" added to cart", Toast.LENGTH_LONG).show();
+//                Intent intent = new Intent(MainActivity.this, BuatPesananActivity.class);
+//                intent.putExtra("item_id",foodId);
+//                intent.putExtra("item_name",foodName);
+//                intent.putExtra("item_category",foodCategory);
+//                intent.putExtra("item_price",foodPrice);
+//                intent.putExtra("currentUserId", currentUserId);
+//                intent.putExtra("currentUserName", currentUserName);
+//
+//                startActivity(intent);
                 return true;
+            }
+        });
+
+        btnfoodCart.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+                View mView = getLayoutInflater().inflate(R.layout.cart_items,null);
+
+                ListView listView;
+                Button order = mView.findViewById(R.id.foodCartOrder);
+                listView = (ListView) mView.findViewById(R.id.foodCartList);
+
+                final ArrayList<String> foodName = new ArrayList<>();
+                for(Food foods:foodCart){
+                    foodName.add(foods.getName() + ", Rp. " + foods.getPrice() + ", " + foods.getCategory());
+                }
+
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(MainActivity.this,android.R.layout.simple_list_item_1,foodName);
+                listView.setAdapter(arrayAdapter);
+
+                mBuilder.setView(mView);
+                AlertDialog dialog = mBuilder.create();
+                dialog.show();
+
+                order.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent intent = new Intent(MainActivity.this, BuatPesananActivity.class);
+                        intent.putExtra("currentUserId", currentUserId);
+                        intent.putExtra("currentUserName",currentUserName);
+                        intent.putExtra("foodCart",foodName);
+                        int foodTotalPrice = 0;
+                        ArrayList<Integer> foodsId = new ArrayList<>();
+                        for (Food foods:foodCart){
+                            foodTotalPrice += foods.getPrice();
+                            foodsId.add(foods.getId());
+                        }
+                        intent.putExtra("totalPrice",foodTotalPrice);
+                        intent.putExtra("foodsId",foodsId);
+                        startActivity(intent);
+                    }
+                });
             }
         });
 

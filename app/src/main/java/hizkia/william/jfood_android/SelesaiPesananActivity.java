@@ -48,7 +48,7 @@ public class SelesaiPesananActivity extends AppCompatActivity {
         final TextView tvInvoiceId = findViewById(R.id.tvInvoiceId);
         final TextView tvInvoiceCustomerName = findViewById(R.id.tvInvoiceCustomerName);
         final TextView tvInvoiceDate = findViewById(R.id.tvInvoiceDate);
-        final TextView tvInvoicePaymentType = findViewById(R.id.tvInvoicePaymentType);
+        //final TextView tvInvoicePaymentType = findViewById(R.id.tvInvoicePaymentType);
         final TextView tvInvoiceTotalPrice = findViewById(R.id.tvInvoiceTotalPrice);
         final Button btnInvoiceCancel = findViewById(R.id.btnInvoiceCancel);
         final Button btnInvoiceDone = findViewById(R.id.btnInvoiceDone);
@@ -70,7 +70,6 @@ public class SelesaiPesananActivity extends AppCompatActivity {
         }
 
         //Fetch data
-        //Set data
         final Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -96,7 +95,7 @@ public class SelesaiPesananActivity extends AppCompatActivity {
                     ArrayList<String> foodList = new ArrayList<String>();
 
                     for(Food food:temp) {
-                        String addTemp = ""+food.getName()+"\t\t\t\t\t\t\t\t\t\t\t\t\t\tRp. "+food.getPrice();
+                        String addTemp = ""+food.getName()+"\t\t\t\t\t\t\t\t\t\tRp. "+food.getPrice();
                         foodList.add(addTemp);
                     }
 
@@ -110,7 +109,7 @@ public class SelesaiPesananActivity extends AppCompatActivity {
                     tvInvoiceId.setText(""+invoiceId);
                     tvInvoiceDate.setText(""+invoiceDate.substring(0,9));
                     tvInvoiceCustomerName.setText(""+currentUserName);
-                    tvInvoicePaymentType.setText(""+invoicePaymentType);
+                    //tvInvoicePaymentType.setText(""+invoicePaymentType);
                     tvInvoiceTotalPrice.setText(""+invoiceTotalPrice);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -120,6 +119,7 @@ public class SelesaiPesananActivity extends AppCompatActivity {
         PesananFetchRequest request = new PesananFetchRequest(currentUserId, responseListener);
         RequestQueue queue = new Volley().newRequestQueue(SelesaiPesananActivity.this);
         queue.add(request);
+
 
         btnInvoiceCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,6 +157,7 @@ public class SelesaiPesananActivity extends AppCompatActivity {
                 queue.add(request);
             }
         });
+
 
         btnInvoiceDone.setOnClickListener(new View.OnClickListener() {
             @Override

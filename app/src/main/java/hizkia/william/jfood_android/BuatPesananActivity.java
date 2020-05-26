@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -20,16 +22,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class BuatPesananActivity extends AppCompatActivity {
 
     private int currentUserId;
     private String currentUserName;
-    private int foodId;
-    private String foodName;
-    private String foodCategory;
-    private double foodPrice;
+    private double totalPrice;
     private String promoCode;
-    private int invoiceId;
+    ListView listView;
+    private ArrayList<String> foodCartArray = new ArrayList<>();
+    private ArrayList<Integer> foodsId = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,32 +44,29 @@ public class BuatPesananActivity extends AppCompatActivity {
         if (extras != null) {
             currentUserName = extras.getString("currentUserName");
             currentUserId = extras.getInt("currentUserId");
-            foodId = extras.getInt("item_id");
-            foodName = extras.getString("item_name");
-            foodCategory = extras.getString("item_category");
-            foodPrice = extras.getInt("item_price");
+            totalPrice = extras.getInt("totalPrice");
+            foodCartArray = extras.getStringArrayList("foodCart");
+            foodsId = extras.getIntegerArrayList("foodsId");
         }
 
         //Initiate xml objects
         final EditText etPromoCode = findViewById(R.id.promo_code);
         final TextView tvTextCode = findViewById(R.id.text_code);
-        final TextView tvFoodName = findViewById(R.id.food_name);
-        final TextView tvFoodCategory = findViewById(R.id.food_category);
-        final TextView tvFoodPrice = findViewById(R.id.food_price);
         final TextView tvTotalPrice = findViewById(R.id.total_price);
         final Button btnOrder = findViewById(R.id.order);
         final Button btnCount = findViewById(R.id.count);
         final RadioGroup radioGroup = findViewById(R.id.radioGroup);
+        listView = (ListView) findViewById(R.id.foodsListView);
 
         //Assign initial value
         etPromoCode.setVisibility(View.GONE);
         tvTextCode.setVisibility(View.GONE);
         btnOrder.setVisibility(View.GONE);
 
-        tvFoodName.setText(foodName);
-        tvFoodCategory.setText(foodCategory);
-        tvFoodPrice.setText("Rp. " + (int) foodPrice);
         tvTotalPrice.setText("Rp. " + "0");
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(BuatPesananActivity.this, android.R.layout.simple_list_item_1, foodCartArray);
+        listView.setAdapter(arrayAdapter);
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -94,7 +94,7 @@ public class BuatPesananActivity extends AppCompatActivity {
                     String selected = selectedRadio.getText().toString().trim();
                     switch (selected) {
                         case "Via CASH":
-                            tvTotalPrice.setText("Rp. " + foodPrice);
+                            tvTotalPrice.setText("Rp. " + totalPrice);
                             btnCount.setVisibility(View.GONE);
                             btnOrder.setVisibility(View.VISIBLE);
                             break;
@@ -106,10 +106,10 @@ public class BuatPesananActivity extends AppCompatActivity {
                             final Response.Listener<String> promoResponse = new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-                                    //Check if promo code is filled or not
+                                    //No promo code applied
                                     if (promoCode.isEmpty()) {
                                         Toast.makeText(BuatPesananActivity.this, "No Promo Code Applied", Toast.LENGTH_LONG).show();
-                                        tvTotalPrice.setText("Rp. " + foodPrice);
+                                        tvTotalPrice.setText("Rp. " + totalPrice);
                                         //Button VIsibility
                                         btnCount.setVisibility(View.GONE);
                                         btnOrder.setVisibility(View.VISIBLE);
@@ -124,14 +124,12 @@ public class BuatPesananActivity extends AppCompatActivity {
                                             if (promoStatus == false) {
                                                 Toast.makeText(BuatPesananActivity.this, "Promo Code can no longer used", Toast.LENGTH_LONG).show();
                                             } else if (promoStatus == true) {
-                                                if (foodPrice < promoDiscountPrice || foodPrice < minimalDiscountPrice) {
+                                                //Promo cannot be applied
+                                                if (totalPrice < promoDiscountPrice || totalPrice < minimalDiscountPrice) {
                                                     Toast.makeText(BuatPesananActivity.this, "Promo Code cannot be Applied", Toast.LENGTH_LONG).show();
                                                 } else {
-                                                    //Toast Feedback
                                                     Toast.makeText(BuatPesananActivity.this, "Promo Code Applied", Toast.LENGTH_LONG).show();
-                                                    //Set Total Price
-                                                    tvTotalPrice.setText("Rp. " + (foodPrice - promoDiscountPrice));
-                                                    //Button VIsibility
+                                                    tvTotalPrice.setText("Rp. " + (totalPrice - promoDiscountPrice));
                                                     btnCount.setVisibility(View.GONE);
                                                     btnOrder.setVisibility(View.VISIBLE);
                                                 }
@@ -149,21 +147,6 @@ public class BuatPesananActivity extends AppCompatActivity {
                             break;
                     }
                 }
-//                int selectedRadioId = radioGroup.getCheckedRadioButtonId();
-//                RadioButton selectedRadio = findViewById(selectedRadioId);
-//                String selected = selectedRadio.getText().toString().trim();
-//                promoCode = etPromoCode.getText().toString();
-//                switch (selected) {
-//                    case "Via CASH":
-//                        tvTotalPrice.setText("Rp. " + foodPrice);
-//                        break;
-//                    case "Via CASHLESS":
-//                        fetchPromo(promoCode);
-//                        tvTotalPrice.setText("Rp. " + (foodPrice + promoPrice));
-//                        break;
-//                }
-//                btnCount.setVisibility(View.GONE);
-//                btnOrder.setVisibility(View.VISIBLE);
         });
 
         btnOrder.setOnClickListener(new View.OnClickListener() {
@@ -202,9 +185,9 @@ public class BuatPesananActivity extends AppCompatActivity {
                 };
 
                 if(selected.equals("Via CASH")){
-                    request = new BuatPesananRequest(foodId+"", currentUserId+"" ,responseListener);
+                    request = new BuatPesananRequest(foodsId, currentUserId+"" ,responseListener);
                 }else if(selected.equals("Via CASHLESS")){
-                    request = new BuatPesananRequest(foodId+"", currentUserId+"", promoCode ,responseListener);}
+                    request = new BuatPesananRequest(foodsId, currentUserId+"", promoCode ,responseListener);}
 
                 RequestQueue queue = Volley.newRequestQueue(BuatPesananActivity.this);
                 queue.add(request);
