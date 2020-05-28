@@ -160,10 +160,9 @@ public class BuatPesananActivity extends AppCompatActivity {
                 final Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
+//                        try {
                             if (response != null) {
-                                Toast.makeText(BuatPesananActivity.this, "Your order has been saved", Toast.LENGTH_LONG).show();
+                                Toast.makeText(BuatPesananActivity.this, ""+response, Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 intent.putExtra("currentUserId", currentUserId);
@@ -171,16 +170,16 @@ public class BuatPesananActivity extends AppCompatActivity {
                                 startActivity(intent);
                             } else {
                                 btnOrder.setVisibility(View.GONE);
-                                Toast.makeText(BuatPesananActivity.this, "Order failed, you have ordered this item before", Toast.LENGTH_LONG).show();
+                                Toast.makeText(BuatPesananActivity.this, "Order failed. Please finish your invoice first", Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 intent.putExtra("currentUserId", currentUserId);
                                 intent.putExtra("currentUserName", currentUserName);
                                 startActivity(intent);
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
                     }
                 };
 

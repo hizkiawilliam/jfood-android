@@ -72,21 +72,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
 
-//                int foodId = childMapping.get(listSeller.get(i)).get(i1).getId();
                 Food food = childMapping.get(listSeller.get(i)).get(i1);
-//                String foodCategory = childMapping.get(listSeller.get(i)).get(i1).getCategory();
-//                int foodPrice = childMapping.get(listSeller.get(i)).get(i1).getPrice();
                 foodCart.add(food);
-                Toast.makeText(MainActivity.this, "1 x "+food.getName()+" added to cart", Toast.LENGTH_LONG).show();
-//                Intent intent = new Intent(MainActivity.this, BuatPesananActivity.class);
-//                intent.putExtra("item_id",foodId);
-//                intent.putExtra("item_name",foodName);
-//                intent.putExtra("item_category",foodCategory);
-//                intent.putExtra("item_price",foodPrice);
-//                intent.putExtra("currentUserId", currentUserId);
-//                intent.putExtra("currentUserName", currentUserName);
-//
-//                startActivity(intent);
+                Toast.makeText(MainActivity.this, "1 x "+food.getName()+" added to cart", Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
