@@ -18,3 +18,11 @@ Version Changelogs:
     - Multiple foods in cart can be ordered
     - Various error handling for Customer Register
     - Total Price has been adjusted not by individual foods
+  - v1.1  : 
+    - All databases are using Postgres
+    - Various fix for exceptions
+   
+ Knownbugs  :
+  - v1.1  : 
+    - Wrong toast when ordering if invoice Ongoing exist (BuatPesananActivity.java)
+ 
