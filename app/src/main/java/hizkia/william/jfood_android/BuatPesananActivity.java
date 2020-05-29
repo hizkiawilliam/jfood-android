@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -160,26 +161,24 @@ public class BuatPesananActivity extends AppCompatActivity {
                 final Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-//                        try {
-                            if (response != null) {
-                                Toast.makeText(BuatPesananActivity.this, ""+response, Toast.LENGTH_LONG).show();
+                        try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                Toast.makeText(BuatPesananActivity.this, "You order has been saved", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 intent.putExtra("currentUserId", currentUserId);
                                 intent.putExtra("currentUserName", currentUserName);
                                 startActivity(intent);
-                            } else {
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                                 btnOrder.setVisibility(View.GONE);
-                                Toast.makeText(BuatPesananActivity.this, "Order failed. Please finish your invoice first", Toast.LENGTH_LONG).show();
+                                Toast.makeText(BuatPesananActivity.this, "Order failed. Please finish your invoice", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 intent.putExtra("currentUserId", currentUserId);
                                 intent.putExtra("currentUserName", currentUserName);
                                 startActivity(intent);
-                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
+                        }
                     }
                 };
 

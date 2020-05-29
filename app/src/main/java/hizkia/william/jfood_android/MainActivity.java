@@ -1,11 +1,17 @@
 package hizkia.william.jfood_android;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,6 +22,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 
 import android.app.AlertDialog;
 import android.widget.ListView;
@@ -29,11 +36,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
-    FloatingActionButton btnfoodCart;
+    FloatingActionButton btnFoodCart;
+    DrawerLayout drawerLayout;
     private ArrayList<Seller> listSeller = new ArrayList<>();
     private ArrayList<Food> foodIdList = new ArrayList<>();
     private ArrayList<Food> foodCart = new ArrayList<>();
@@ -53,20 +61,13 @@ public class MainActivity extends AppCompatActivity {
             currentUserName = extras.getString("currentUserName");
         }
 
-        expListView = findViewById(R.id.lvExp);
-        btnfoodCart = findViewById(R.id.foodCart);
-        Button btnPesanan = findViewById(R.id.btnPesanan);
-        refreshList();
+        drawerLayout = findViewById(R.id.main_act);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
-        btnPesanan.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SelesaiPesananActivity.class);
-                intent.putExtra("currentUserId", currentUserId);
-                intent.putExtra("currentUserName",currentUserName);
-                startActivity(intent);
-            }
-        });
+        expListView = findViewById(R.id.lvExp);
+        btnFoodCart = findViewById(R.id.foodCart);
+        refreshList();
 
         expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
@@ -79,47 +80,56 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnfoodCart.setOnClickListener(new View.OnClickListener(){
+        btnFoodCart.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
-                View mView = getLayoutInflater().inflate(R.layout.cart_items,null);
 
-                ListView listView;
-                Button order = mView.findViewById(R.id.foodCartOrder);
-                listView = (ListView) mView.findViewById(R.id.foodCartList);
-
-                final ArrayList<String> foodName = new ArrayList<>();
-                for(Food foods:foodCart){
-                    foodName.add(foods.getName() + ", Rp. " + foods.getPrice() + ", " + foods.getCategory());
+                if(foodCart.isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Your cart is empty", Toast.LENGTH_SHORT).show();
                 }
+                else {
 
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(MainActivity.this,android.R.layout.simple_list_item_1,foodName);
-                listView.setAdapter(arrayAdapter);
+                    AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+                    View mView = getLayoutInflater().inflate(R.layout.cart_items, null);
 
-                mBuilder.setView(mView);
-                AlertDialog dialog = mBuilder.create();
-                dialog.show();
+                    ListView listView;
+                    Button order = mView.findViewById(R.id.foodCartOrder);
+                    listView = (ListView) mView.findViewById(R.id.foodCartList);
 
-                order.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        Intent intent = new Intent(MainActivity.this, BuatPesananActivity.class);
-                        intent.putExtra("currentUserId", currentUserId);
-                        intent.putExtra("currentUserName",currentUserName);
-                        intent.putExtra("foodCart",foodName);
-                        int foodTotalPrice = 0;
-                        ArrayList<Integer> foodsId = new ArrayList<>();
-                        for (Food foods:foodCart){
-                            foodTotalPrice += foods.getPrice();
-                            foodsId.add(foods.getId());
-                        }
-                        intent.putExtra("totalPrice",foodTotalPrice);
-                        intent.putExtra("foodsId",foodsId);
-                        startActivity(intent);
+                    final ArrayList<String> foodName = new ArrayList<>();
+                    for (Food foods : foodCart) {
+                        foodName.add("Food name\t\t\t: " + foods.getName() +
+                                "\nFood Price\t\t\t\t: Rp. " + foods.getPrice() +
+                                "\nFood Category\t: " + foods.getCategory());
                     }
-                });
+
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, foodName);
+                    listView.setAdapter(arrayAdapter);
+
+                    mBuilder.setView(mView);
+                    AlertDialog dialog = mBuilder.create();
+                    dialog.show();
+
+                    order.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            Intent intent = new Intent(MainActivity.this, BuatPesananActivity.class);
+                            intent.putExtra("currentUserId", currentUserId);
+                            intent.putExtra("currentUserName", currentUserName);
+                            intent.putExtra("foodCart", foodName);
+                            int foodTotalPrice = 0;
+                            ArrayList<Integer> foodsId = new ArrayList<>();
+                            for (Food foods : foodCart) {
+                                foodTotalPrice += foods.getPrice();
+                                foodsId.add(foods.getId());
+                            }
+                            intent.putExtra("totalPrice", foodTotalPrice);
+                            intent.putExtra("foodsId", foodsId);
+                            startActivity(intent);
+                        }
+                    });
+                }
             }
         });
 
@@ -208,5 +218,20 @@ public class MainActivity extends AppCompatActivity {
         MenuRequest menuRequest = new MenuRequest(responseListener);
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
         queue.add(menuRequest);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        switch (menuItem.getItemId()){
+            case R.id.nav_ongoingInvoice:
+//                Toast.makeText(MainActivity.this, "Selesai Pesanan", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, SelesaiPesananActivity.class);
+                intent.putExtra("currentUserId", currentUserId);
+                intent.putExtra("currentUserName", currentUserName);
+                startActivity(intent);
+                break;
+        }
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

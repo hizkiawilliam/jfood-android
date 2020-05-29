@@ -95,7 +95,9 @@ public class SelesaiPesananActivity extends AppCompatActivity {
                     ArrayList<String> foodList = new ArrayList<String>();
 
                     for(Food food:temp) {
-                        String addTemp = ""+food.getName()+"\t\t\t\t\t\t\t\t\t\tRp. "+food.getPrice();
+                        String addTemp = "Food name\t\t\t: " + food.getName() +
+                                "\nFood Price\t\t\t\t: Rp. " + food.getPrice() +
+                                "\nFood Category\t: " + food.getCategory();
                         foodList.add(addTemp);
                     }
 
@@ -142,12 +144,8 @@ public class SelesaiPesananActivity extends AppCompatActivity {
                                 builder.setMessage("Operation Failed! Please try again").create().show();
                             }
                         } catch (JSONException e) {
-                            Toast.makeText(SelesaiPesananActivity.this, "This invoice is canceled", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            intent.putExtra("currentUserId", currentUserId);
-                            intent.putExtra("currentUserName", currentUserName);
-                            startActivity(intent);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(SelesaiPesananActivity.this);
+                            builder.setMessage("Operation Failed! Please try again").create().show();
                         }
                     }
                 };
