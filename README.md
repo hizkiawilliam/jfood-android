@@ -1,4 +1,4 @@
-# jfood-android v.1.2
+# jfood-android v.1.3
 
 This is an Android application project for Object Oriented Programming course, Computer Engineering, Universitas Indonesia.
 To use this app, jfood-android and jfood projects need to be used. jfood-android is Android Studio project while jfood is Java project developed in IntelliJ. The purpose of jfood project is to serve as backend program and database handler.
@@ -28,6 +28,14 @@ Version Changelogs:
     - UI improvements
     - Fix bugs in found in v1.1
     - Error handling for cart system
+  - v1.3  : 
+    - Feature Promo list added
+    - Feature Ongoing invoice added
+    - Feature Logout added
+    - Feature History invoice
+    - Fix database invoice bugs
+    - Optimize database fetching (invoice by customer ongoing)
+    - Display "Data fetching" while fetching data from database (for Ongoing invoice and History invoice)
     
  Knownbugs  :
   - v1.1  : 
