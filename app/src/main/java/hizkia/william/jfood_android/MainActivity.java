@@ -132,15 +132,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         });
-
-
-//        btnPesanan.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MainActivity.this, SelesaiPesananActivity.class);
-//                startActivity(intent);
-//            }
-//        });
     }
 
     protected void refreshList() {
@@ -222,12 +213,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        Intent intent;
         switch (menuItem.getItemId()){
             case R.id.nav_ongoingInvoice:
-//                Toast.makeText(MainActivity.this, "Selesai Pesanan", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MainActivity.this, SelesaiPesananActivity.class);
+                intent = new Intent(MainActivity.this, SelesaiPesananActivity.class);
                 intent.putExtra("currentUserId", currentUserId);
                 intent.putExtra("currentUserName", currentUserName);
+                startActivity(intent);
+                break;
+            case R.id.nav_promoList:
+                intent = new Intent(MainActivity.this, PromoActivity.class);
+                intent.putExtra("currentUserId", currentUserId);
+                intent.putExtra("currentUserName", currentUserName);
+                startActivity(intent);
+                break;
+            case R.id.nav_historyInvoice:
+                intent = new Intent(MainActivity.this, InvoiceHistory.class);
+                intent.putExtra("currentUserId", currentUserId);
+                intent.putExtra("currentUserName", currentUserName);
+                startActivity(intent);
+                break;
+            case R.id.nav_logout:
+                intent = new Intent(MainActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
         }
