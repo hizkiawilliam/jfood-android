@@ -1,4 +1,4 @@
-# jfood-android v.1.3
+# jfood-android v.1.4
 
 This is an Android application project for Object Oriented Programming course, Computer Engineering, Universitas Indonesia.
 To use this app, jfood-android and jfood projects need to be used. jfood-android is Android Studio project while jfood is Java project developed in IntelliJ. The purpose of jfood project is to serve as backend program and database handler.
@@ -36,8 +36,17 @@ Version Changelogs:
     - Fix database invoice bugs
     - Optimize database fetching (invoice by customer ongoing)
     - Display "Data fetching" while fetching data from database (for Ongoing invoice and History invoice)
+  - v1.4  : 
+    - Fix UI naviation bar (add background, etc)
+    - Feature profile added
+    - Add background for login and register activity
+    - Add toggle button for navigation bar
+    - Add JavaDocs for both jfood and jfood-android
+    - Add various comments in jfood-android
+    - Add price for promo discount in buat pesanan activity
+    - Fix layout position of selesai pesanan activity
     
  Knownbugs  :
   - v1.1  : 
-    - Wrong toast when ordering if invoice Ongoing exist (BuatPesananActivity.java)
+    - Wrong toast when ordering if invoice Ongoing exist (BuatPesananActivity.java) (fixed in v1.2)
  
