@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SelesaiPesananActivity">
+
+    <TextView
+        android:id="@+id/staticInvoice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="152dp"
+        android:layout_marginTop="71dp"
+        android:layout_marginEnd="152dp"
+        android:layout_marginBottom="640dp"
+        android:text="@string/ongoing_invoice"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/staticInvoiceDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="54dp"
+        android:layout_marginTop="372dp"
+        android:layout_marginEnd="253dp"
+        android:layout_marginBottom="339dp"
+        android:text="@string/invoice_date"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvInvoiceCustomerName"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="239dp"
+        android:layout_marginTop="167dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="544dp"
+        android:text="@string/textview"
+        android:textAlignment="viewStart"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/staticInvoiceCustomerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="54dp"
+        android:layout_marginTop="169dp"
+        android:layout_marginEnd="248dp"
+        android:layout_marginBottom="542dp"
+        android:text="@string/invoice_customer_name"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvInvoicePaymentType"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="239dp"
+        android:layout_marginTop="413dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="294dp"
+        android:text="@string/textview"
+        android:textAlignment="viewStart"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvInvoiceId"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="239dp"
+        android:layout_marginTop="125dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="586dp"
+        android:text="@string/textview"
+        android:textAlignment="viewStart"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/staticInvoiceId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="54dp"
+        android:layout_marginTop="125dp"
+        android:layout_marginEnd="293dp"
+        android:layout_marginBottom="586dp"
+        android:text="@string/invoice_id"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvInvoiceTotalPrice"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="239dp"
+        android:layout_marginTop="453dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="254dp"
+        android:text="@string/textview"
+        android:textAlignment="viewStart"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/staticInvoicePayementType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="54dp"
+        android:layout_marginTop="415dp"
+        android:layout_marginEnd="263dp"
+        android:layout_marginBottom="296dp"
+        android:text="@string/invoice_payment_type"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/staticInvoiceTotalPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="54dp"
+        android:layout_marginTop="455dp"
+        android:layout_marginEnd="285dp"
+        android:layout_marginBottom="256dp"
+        android:text="@string/invoice_total_price"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/staticInvoiceFoodName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="54dp"
+        android:layout_marginTop="211dp"
+        android:layout_marginEnd="259dp"
+        android:layout_marginBottom="500dp"
+        android:text="@string/invoice_foods"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvInvoiceDate"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="239dp"
+        android:layout_marginTop="370dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="337dp"
+        android:text="@string/textview"
+        android:textAlignment="viewStart"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnInvoiceCancel"
+        android:layout_width="286dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="520dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="163dp"
+        android:text="@string/cancel_order"
+        android:textColor="#4CAF50"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnInvoiceDone"
+        android:layout_width="286dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="590dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="93dp"
+        android:backgroundTint="#4CAF50"
+        android:text="@string/finish_order"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:id="@+id/foodsListView"
+        android:layout_width="338dp"
+        android:layout_height="103dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="247dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="381dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

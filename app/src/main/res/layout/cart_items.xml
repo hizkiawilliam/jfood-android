@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/foodCartClear"
+        android:layout_width="281dp"
+        android:layout_height="55dp"
+        android:layout_gravity="end|bottom"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="558dp"
+        android:layout_marginEnd="65dp"
+        android:layout_marginBottom="129dp"
+        android:layout_weight="1"
+        android:text="@string/clear"
+        android:textColor="#4CAF50"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/foodCartOrder"
+        android:layout_width="281dp"
+        android:layout_height="55dp"
+        android:layout_gravity="end|bottom"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="615dp"
+        android:layout_marginEnd="65dp"
+        android:layout_marginBottom="72dp"
+        android:layout_weight="1"
+        android:backgroundTint="#4CAF50"
+        android:text="@string/order"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="413dp"
+        android:layout_height="435dp"
+        android:layout_marginTop="101dp"
+        android:layout_marginBottom="195dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ListView
+            android:id="@+id/foodCartList"
+            android:layout_width="299dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+        </ListView>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/stFoodCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="54dp"
+        android:layout_marginEnd="235dp"
+        android:layout_marginBottom="650dp"
+        android:text="Food Cart"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

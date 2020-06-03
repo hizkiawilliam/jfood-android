@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">jfood-android</string>
+    <string name="name">name</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="login">LOGIN</string>
+    <string name="register">REGISTER</string>
+    <string name="register_now">Register Now</string>
+    <string name="jfood">Jfood</string>
+    <string name="food_name">Food Name</string>
+    <string name="food_category">Food Category</string>
+    <string name="food_price">Food Price</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="promo_code">Promo Code</string>
+    <string name="total_price">Total Price</string>
+    <string name="textview">TextView</string>
+    <string name="via_cash">Via CASH</string>
+    <string name="via_cashless">Via CASHLESS</string>
+    <string name="order">Order</string>
+    <string name="count">Count</string>
+    <string name="ardiuno">Ardiuno</string>
+    <string name="pesanan">Pesanan</string>
+    <string name="ongoing_invoice">Ongoing Invoice</string>
+    <string name="invoice_id">Invoice Id</string>
+    <string name="invoice_total_price">Total Price</string>
+    <string name="invoice_customer_name">Customer Name</string>
+    <string name="invoice_foods">Foods Ordered</string>
+    <string name="invoice_date">Invoice Created</string>
+    <string name="invoice_payment_type">Payment Type</string>
+    <string name="finish_order">Finish Order</string>
+    <string name="cancel_order">Cancel Order</string>
+    <string name="clear">Clear</string>
+    <string name="discount">Discount</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+</resources>

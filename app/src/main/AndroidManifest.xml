@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="hizkia.william.jfood_android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/jfood_icon"
+        android:label="@string/jfood"
+        android:roundIcon="@mipmap/jfood_icon"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ProfileActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".InvoiceHistory"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".PromoActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".SelesaiPesananActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".BuatPesananActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".RegisterActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".LoginActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
