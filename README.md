@@ -37,7 +37,7 @@ Version Changelogs:
     - Optimize database fetching (invoice by customer ongoing)
     - Display "Data fetching" while fetching data from database (for Ongoing invoice and History invoice)
   - v1.4  : 
-    - Fix UI naviation bar (add background, etc)
+    - Fix UI navigation bar (add background, etc)
     - Feature profile added
     - Add background for login and register activity
     - Add toggle button for navigation bar
